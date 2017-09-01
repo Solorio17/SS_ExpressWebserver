@@ -6,15 +6,20 @@ app.engine("html", engines.nunjucks);
 app.set("view engine", "html");
 app.set("views", __dirname + "/views");
 
-app.get("/", function(req, res){
-  res.render("index");
+app.get("/", (req, res) => {
+res.render("index");
 });
 
-app.use(function(req, res){
+app.get("/:name", (req, res) => {
+let users = req.params.name;
+res.render("name", {users: users});
+});
+
+app.use((req, res) => {
   res.sendStatus(400);
 });
 
-const server = app.listen(3000, function(){
+const server = app.listen(3000,() => {
   let port = server.address().port;
-  console.log("LISTENING ON PORT %s", port);
+  console.log("Listening On Port... %s", port);
 });
